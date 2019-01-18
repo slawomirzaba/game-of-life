@@ -1,102 +1,75 @@
 import React, { useState, useEffect } from "react";
 import { times as _times } from "lodash";
-import { GameStateI, ActiveElementsKeysI } from "../interfaces";
+import { ActiveElementsKeysI } from "../interfaces";
 import { Header } from "../Components/Header";
 import { Board } from "../Components/Board";
 import "./game.css";
 import { getCellKey, getNewCellState } from "../lib";
 
 export const Container = () => {
-  const MIN_REFRESH_TIME = 100;
-  const initialState: GameStateI = {
-    columns: 20,
-    rows: 20,
-    refreshTime: 200,
-    activeElementsKeys: {},
-    iteration: 0,
-    playOption: false
-  };
-  const [state, setState] = useState(initialState);
+  const REFRESH_TIME = 200;
+  const INITIAL_ROWS_NUMBER = 20;
+  const INITIAL_COLUMNS_NUMBER = 20;
+  const INITIAL_ACTIVE_ELEMENTS_KEYS: ActiveElementsKeysI = {};
+
+  const [columns, setColumns] = useState(INITIAL_ROWS_NUMBER);
+  const [rows, setRows] = useState(INITIAL_COLUMNS_NUMBER);
+  const [iteration, setIteration] = useState(0);
+  const [playOption, setPlayOption] = useState(false);
+  const [activeElementsKeys, setActiveElementsKeys] = useState(
+    INITIAL_ACTIVE_ELEMENTS_KEYS
+  );
 
   useEffect(
     () => {
-      if (!state.playOption) return;
-      const refreshTime = Math.max(MIN_REFRESH_TIME, state.refreshTime);
-      setTimeout(() => executeOneIteration(), refreshTime);
+      if (!playOption) return;
+
+      setTimeout(() => executeOneIteration(), REFRESH_TIME);
     },
-    [state.iteration, state.playOption, state.refreshTime]
+    [iteration, playOption]
   );
 
-  const setColumns = (columns: string): void => {
+  const onSetColumns = (columns: string): void => {
     const columnsValue = parseInt(columns, 10) || 0;
 
-    setState(prevState => {
-      return { ...prevState, columns: columnsValue };
-    });
+    setColumns(columnsValue);
   };
 
-  const setRows = (rows: string): void => {
+  const onSetRows = (rows: string): void => {
     const rowsValue = parseInt(rows, 10) || 0;
 
-    setState(prevState => {
-      return { ...prevState, rows: rowsValue };
-    });
-  };
-
-  const setRefreshTime = (time: string): void => {
-    const refreshTime = parseInt(time, 10) || 0;
-
-    setState(prevState => {
-      return {
-        ...prevState,
-        refreshTime
-      };
-    });
+    setRows(rowsValue);
   };
 
   const toggleActiveElementKey = (key: string): void => {
-    if (state.playOption) return;
+    if (playOption) return;
 
-    setState(prevState => {
-      const value = prevState.activeElementsKeys[key] ? false : true;
+    setActiveElementsKeys(prevActiveElementsKeys => {
+      const value = prevActiveElementsKeys[key] ? false : true;
 
-      return {
-        ...prevState,
-        activeElementsKeys: { ...prevState.activeElementsKeys, [key]: value }
-      };
+      return { ...prevActiveElementsKeys, [key]: value };
     });
   };
 
   const playAction = () => {
-    setState(prevState => {
-      return {
-        ...prevState,
-        playOption: true,
-        iteration: prevState.iteration + 1
-      };
-    });
+    setPlayOption(true);
   };
 
   const pauseAction = () => {
-    setState(prevState => {
-      return {
-        ...prevState,
-        playOption: false
-      };
-    });
+    setPlayOption(false);
   };
 
   const executeOneIteration = () => {
-    const currentActiveElementsKeys = state.activeElementsKeys;
+    const currentActiveElementsKeys = activeElementsKeys;
     const newActiveElementsKeys: ActiveElementsKeysI = {};
 
-    _times(state.rows).forEach(rowIndex => {
-      _times(state.columns).forEach(columnIndex => {
+    _times(rows).forEach(rowIndex => {
+      _times(columns).forEach(columnIndex => {
         const key = getCellKey(rowIndex, columnIndex);
         const newCellValue = getNewCellState(
           key,
-          state.rows,
-          state.columns,
+          rows,
+          columns,
           currentActiveElementsKeys
         );
 
@@ -105,34 +78,27 @@ export const Container = () => {
       });
     });
 
-    setState(prevState => {
-      return {
-        ...prevState,
-        activeElementsKeys: newActiveElementsKeys,
-        iteration: prevState.iteration + 1
-      };
-    });
+    setActiveElementsKeys(newActiveElementsKeys);
+    setIteration(prevIteration => prevIteration + 1);
   };
 
   return (
     <div className="game">
       <Header
-        tableColumns={state.columns}
-        tableRows={state.rows}
-        refreshTime={state.refreshTime}
-        setColumns={setColumns}
-        setRows={setRows}
-        setRefreshTime={setRefreshTime}
+        tableColumns={columns}
+        tableRows={rows}
+        setColumns={onSetColumns}
+        setRows={onSetRows}
       />
       <Board
-        tableColumns={state.columns}
-        tableRows={state.rows}
+        tableColumns={columns}
+        tableRows={rows}
         toggleActiveElementKey={toggleActiveElementKey}
-        activeElementsKeys={state.activeElementsKeys}
+        activeElementsKeys={activeElementsKeys}
         playAction={playAction}
         executeOneIteration={executeOneIteration}
         pauseAction={pauseAction}
-        isPlayEnabled={state.playOption}
+        isPlayEnabled={playOption}
       />
     </div>
   );
