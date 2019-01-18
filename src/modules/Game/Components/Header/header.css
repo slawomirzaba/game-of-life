@@ -1,0 +1,31 @@
+.boardForm {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: inline-grid;
+  grid-template-columns: 300px;
+  grid-row-gap: 15px;
+  background: black;
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px 0px rgba(82, 167, 199, 0.6);
+}
+
+.boardForm__field {
+  display: grid;
+  grid-template-columns: 160px 80px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.boardForm__fieldLabel {
+  color: rgb(82, 167, 199);
+}
+
+.boardForm__fieldInput {
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px 0px rgba(82, 167, 199, 0.6);
+}

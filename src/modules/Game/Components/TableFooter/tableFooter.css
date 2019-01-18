@@ -1,0 +1,28 @@
+.board__tableFooter {
+    color: white;
+    background: black;
+    text-align: center;
+    height: 40px;
+    border: 1px solid #777;
+}
+
+.board__tableFooter>button {
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 5px 15px;
+    outline: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.board__tableFooter>button:not([disabled]):hover {
+    opacity: 1;
+}
+
+.board__tableFooter>button:disabled {
+    cursor: not-allowed;
+}
+

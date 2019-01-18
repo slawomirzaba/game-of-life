@@ -1,0 +1,10 @@
+.board {
+  display:flex;
+  justify-content: center;
+  position: relative;
+  margin-top: 90px;
+}
+
+.board__table {
+  border-collapse: collapse;
+}
