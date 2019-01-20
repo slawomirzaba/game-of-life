@@ -7,6 +7,8 @@ interface PropsI {
   playAction: () => void;
   executeOneIteration: () => void;
   pauseAction: () => void;
+  clearBoard: () => void;
+  toggleBorders: () => void;
 }
 
 export const TableFooter = ({
@@ -14,7 +16,9 @@ export const TableFooter = ({
   isPlayEnabled,
   playAction,
   executeOneIteration,
-  pauseAction
+  pauseAction,
+  clearBoard,
+  toggleBorders
 }: PropsI) => {
   return (
     <tr>
@@ -27,6 +31,12 @@ export const TableFooter = ({
         </button>
         <button onClick={executeOneIteration} disabled={isPlayEnabled}>
           <i className="fas fa-redo" />
+        </button>
+        <button onClick={clearBoard} disabled={isPlayEnabled}>
+          <i className="fas fa-trash" />
+        </button>
+        <button onClick={toggleBorders}>
+          <i className="fas fa-th" />
         </button>
       </td>
     </tr>

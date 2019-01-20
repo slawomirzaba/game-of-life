@@ -11,26 +11,43 @@ interface PropsI {
   tableRows: number;
   activeElementsKeys: ActiveElementsKeysI;
   isPlayEnabled: boolean;
+  isBorders: boolean;
   toggleActiveElementKey: (key: string) => void;
   playAction: () => void;
   executeOneIteration: () => void;
   pauseAction: () => void;
+  clearBoard: () => void;
+  onMouseEnterElement: (elementKey: string) => void;
+  onMouseDownElement: (elementKey: string) => void;
+  onMouseUpBoard: () => void;
+  onMouseLeaveBoard: () => void;
+  toggleBorders: () => void;
 }
 
 export const Board = ({
   tableColumns,
   tableRows,
   activeElementsKeys,
-  toggleActiveElementKey,
+  isPlayEnabled,
+  isBorders,
   playAction,
   executeOneIteration,
   pauseAction,
-  isPlayEnabled
+  clearBoard,
+  onMouseEnterElement,
+  onMouseDownElement,
+  onMouseUpBoard,
+  onMouseLeaveBoard,
+  toggleBorders
 }: PropsI) => {
   return (
     <div className="board">
-      <table className="board__table">
-        <tbody>
+      <table
+        className={`board__table ${
+          !isBorders ? "board__table--disabledBorders" : ""
+        }`}
+      >
+        <tbody onMouseUp={onMouseUpBoard} onMouseLeave={onMouseLeaveBoard}>
           {_times(tableRows).map((rowIndex: number) => (
             <tr key={rowIndex}>
               {_times(tableColumns).map((columnIndex: number) => {
@@ -41,20 +58,25 @@ export const Board = ({
                     key={key}
                     elementKey={key}
                     isActive={activeElementsKeys[key]}
-                    toggleActiveElementKey={toggleActiveElementKey}
+                    onMouseEnter={onMouseEnterElement}
+                    onMouseDown={onMouseDownElement}
                   />
                 );
               })}
             </tr>
           ))}
+        </tbody>
+        <tfoot>
           <TableFooter
             tableColumns={tableColumns}
             playAction={playAction}
             executeOneIteration={executeOneIteration}
             pauseAction={pauseAction}
             isPlayEnabled={isPlayEnabled}
+            clearBoard={clearBoard}
+            toggleBorders={toggleBorders}
           />
-        </tbody>
+        </tfoot>
       </table>
     </div>
   );

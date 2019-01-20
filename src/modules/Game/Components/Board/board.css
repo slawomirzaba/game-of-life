@@ -1,5 +1,5 @@
 .board {
-  display:flex;
+  display: flex;
   justify-content: center;
   position: relative;
   margin-top: 20px;
@@ -7,4 +7,8 @@
 
 .board__table {
   border-collapse: collapse;
+}
+
+.board__table--disabledBorders tbody td {
+  border: none;
 }

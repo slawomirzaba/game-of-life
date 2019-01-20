@@ -4,13 +4,15 @@ import "./element.css";
 interface PropsI {
   elementKey: string;
   isActive: boolean;
-  toggleActiveElementKey: (key: string) => void;
+  onMouseEnter: (elementKey: string) => void;
+  onMouseDown: (elementKey: string) => void;
 }
 
 export const Element = ({
   elementKey,
   isActive,
-  toggleActiveElementKey,
+  onMouseEnter,
+  onMouseDown
 }: PropsI) => {
   const getClassName = (): string => {
     let className = "element";
@@ -21,8 +23,9 @@ export const Element = ({
 
   return (
     <td
+      onMouseEnter={() => onMouseEnter(elementKey)}
+      onMouseDown={() => onMouseDown(elementKey)}
       className={getClassName()}
-      onClick={() => toggleActiveElementKey(elementKey)}
     />
   );
 };
