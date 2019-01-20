@@ -1,4 +1,4 @@
-.element {
+.boardElement {
   height: 20px;
   width: 20px;
   border: 1px solid #777;
@@ -6,6 +6,6 @@
   background: white;
 }
 
-.element--active {
+.boardElement--active {
   background: black;
 }

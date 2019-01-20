@@ -2,7 +2,9 @@ import { PatternI } from "../../interfaces";
 
 export const blinker: PatternI = {
   name: "Blinker",
-  structure: { "1,1": true, "1,2": true, "1,3": true }
+  structure: { "1,1": true, "1,2": true, "1,3": true },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif"
 };
 
 export const toad: PatternI = {
@@ -14,7 +16,9 @@ export const toad: PatternI = {
     "2,2": true,
     "2,3": true,
     "2,4": true
-  }
+  },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif"
 };
 
 export const beacon: PatternI = {
@@ -28,7 +32,9 @@ export const beacon: PatternI = {
     "4,3": true,
     "4,4": true,
     "3,4": true
-  }
+  },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif"
 };
 
 export const iColumn: PatternI = {
@@ -56,7 +62,8 @@ export const iColumn: PatternI = {
     "14,10": true,
     "14,9": true,
     "14,8": true
-  }
+  },
+  url: "https://upload.wikimedia.org/wikipedia/commons/f/fb/I-Column.gif"
 };
 
 export const pulsar: PatternI = {
@@ -110,5 +117,7 @@ export const pulsar: PatternI = {
     "14,15": true,
     "13,15": true,
     "12,15": true
-  }
+  },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif"
 };

@@ -15,8 +15,8 @@ export const Element = ({
   onMouseDown
 }: PropsI) => {
   const getClassName = (): string => {
-    let className = "element";
-    if (isActive) className += " element--active";
+    let className = "boardElement";
+    if (isActive) className += " boardElement--active";
 
     return className;
   };

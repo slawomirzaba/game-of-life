@@ -41,5 +41,7 @@ export const gosperGliderGun: PatternI = {
     "5,35": true,
     "5,36": true,
     "4,36": true
-  }
+  },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Game_of_life_glider_gun.svg/610px-Game_of_life_glider_gun.svg.png"
 };

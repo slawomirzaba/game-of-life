@@ -2,7 +2,15 @@ import { PatternI } from "../../interfaces";
 
 export const glider: PatternI = {
   name: "Gldider",
-  structure: { "3,5": true, "3,6": true, "3,7": true, "2,7": true, "1,6": true }
+  structure: {
+    "3,5": true,
+    "3,6": true,
+    "3,7": true,
+    "2,7": true,
+    "1,6": true
+  },
+  url:
+    "https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif"
 };
 
 export const heavyWeightSpaceship: PatternI = {
@@ -26,5 +34,6 @@ export const heavyWeightSpaceship: PatternI = {
     "15,17": true,
     "14,12": true,
     "14,13": true
-  }
+  },
+  url: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Animated_Hwss.gif"
 };

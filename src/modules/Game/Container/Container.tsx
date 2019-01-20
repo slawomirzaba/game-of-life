@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { times as _times } from "lodash";
-import { ActiveElementsKeysI } from "../interfaces";
+import { ActiveElementsKeysI, PatternI } from "../interfaces";
 import { Header } from "../Components/Header";
 import { Board } from "../Components/Board";
 import "./game.css";
@@ -58,6 +58,17 @@ export const Container = () => {
 
   const clearBoard = () => {
     setActiveElementsKeys({});
+  };
+
+  const selectPattern = (pattern: PatternI) => {
+    if (isPlay) return;
+
+    const minColumns = pattern.minColumns || INITIAL_COLUMNS_NUMBER;
+    const minRows = pattern.minRows || INITIAL_ROWS_NUMBER;
+
+    setColumns(`${minColumns}`);
+    setRows(`${minRows}`);
+    setActiveElementsKeys(pattern.structure);
   };
 
   const onMouseDownElement = (elementKey: string) => {
@@ -121,6 +132,8 @@ export const Container = () => {
         tableRows={rows}
         setColumns={setColumns}
         setRows={setRows}
+        selectPattern={selectPattern}
+        isPlay={isPlay}
       />
       <Board
         tableColumns={columns}

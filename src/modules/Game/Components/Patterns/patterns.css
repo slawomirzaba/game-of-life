@@ -1,0 +1,53 @@
+.patterns {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    color: white;
+    overflow: hidden;
+}
+
+.patterns--disabled {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.patterns__elementsList {
+    list-style: none;
+    display: inline-grid;
+    grid-auto-flow: column;
+    padding: 0;
+    width: 100%;
+    overflow: auto;
+}
+
+.patterns__element {
+    text-align: center;
+    height: 80px;
+    width: 100px;
+    color: rgb(82, 167, 199);
+    margin: 5px;
+    cursor: pointer;
+}
+
+.patterns__elementImage {
+    height: 40px;
+    width: 40px;
+}
+
+.patterns__elementsList::-webkit-scrollbar {
+    height: 6px;
+}
+
+/* Track */
+.patterns__elementsList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.patterns__elementsList::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.patterns__elementsList::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

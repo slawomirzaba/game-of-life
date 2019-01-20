@@ -1,41 +1,35 @@
 import React from "react";
 import "./header.css";
+import { BoardForm } from "../BoardForm";
+import { Patterns } from "../Patterns";
+import { PatternI } from "../../interfaces";
 
 interface PropsI {
   tableColumns: number;
   tableRows: number;
+  isPlay: boolean;
   setColumns: (columns: string) => void;
   setRows: (rows: string) => void;
+  selectPattern: (pattern: PatternI) => void;
 }
 
 export const Header = ({
   tableColumns,
   tableRows,
+  isPlay,
   setColumns,
-  setRows
+  setRows,
+  selectPattern
 }: PropsI) => {
   return (
     <div className="header">
-      <div className="boardForm">
-        <div className="boardForm__field">
-          <label className="boardForm__fieldLabel">Columns:</label>
-          <input
-            className="boardForm__fieldInput"
-            type="number"
-            value={tableColumns}
-            onChange={e => setColumns(e.target.value)}
-          />
-        </div>
-        <div className="boardForm__field">
-          <label className="boardForm__fieldLabel">Rows:</label>
-          <input
-            className="boardForm__fieldInput"
-            type="number"
-            value={tableRows}
-            onChange={e => setRows(e.target.value)}
-          />
-        </div>
-      </div>
+      <BoardForm
+        tableColumns={tableColumns}
+        tableRows={tableRows}
+        setColumns={setColumns}
+        setRows={setRows}
+      />
+        <Patterns selectPattern={selectPattern} isPlay={isPlay} />
     </div>
   );
 };

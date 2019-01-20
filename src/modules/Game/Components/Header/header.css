@@ -1,29 +1,8 @@
-.boardForm {
-  display: inline-grid;
-  grid-template-columns: 300px;
-  grid-row-gap: 15px;
-  background: black;
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 5px 5px 10px 0px rgba(82, 167, 199, 0.6);
-  margin-left: 30px;
-}
-
-.boardForm__field {
+.header {
+  width: 90%;
+  margin: auto;
   display: grid;
-  grid-template-columns: 160px 80px;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  grid-template-columns: minmax(200px, 300px) auto;
+  grid-column-gap: 40px;
 }
 
-.boardForm__fieldLabel {
-  color: rgb(82, 167, 199);
-}
-
-.boardForm__fieldInput {
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px 0px rgba(82, 167, 199, 0.6);
-}
