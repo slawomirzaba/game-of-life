@@ -5,29 +5,39 @@ import { Header } from "../Components/Header";
 import { Board } from "../Components/Board";
 import "./game.css";
 import { getCellKey, getNewCellState } from "../lib";
-import { useIntegerInput } from "../hooks";
+import { usePositiveInteger, useToggle } from "../hooks";
 
 export const Container = () => {
-  const REFRESH_TIME = 200;
+  const DEFAULT_REFRESH_TIME = 200;
   const INITIAL_ROWS_NUMBER = 20;
   const INITIAL_COLUMNS_NUMBER = 20;
   const INITIAL_ACTIVE_ELEMENTS_KEYS: ActiveElementsKeysI = {};
+  const SLIDER_VALUES = {
+    0: 3000,
+    1: 1000,
+    2: 500,
+    3: DEFAULT_REFRESH_TIME,
+    4: 50,
+    5: 20
+  };
 
-  const [columns, setColumns] = useIntegerInput(INITIAL_ROWS_NUMBER);
-  const [rows, setRows] = useIntegerInput(INITIAL_COLUMNS_NUMBER);
+  const [columns, setColumns] = usePositiveInteger(INITIAL_ROWS_NUMBER);
+  const [rows, setRows] = usePositiveInteger(INITIAL_COLUMNS_NUMBER);
   const [iteration, setIteration] = useState(0);
   const [isPlay, setIsPlay] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isBorders, setIsBorders] = useState(true);
+  const [isBorders, toggleBorders] = useToggle(true);
+  const [isColorDrawing, setColorDrawing] = useState(true);
   const [activeElementsKeys, setActiveElementsKeys] = useState(
     INITIAL_ACTIVE_ELEMENTS_KEYS
   );
+  const [sliderTimeValue, setSliderTimeValue] = useState(3);
 
   useEffect(
     () => {
       setTimeout(() => {
         isPlay && executeOneIteration();
-      }, REFRESH_TIME);
+      }, SLIDER_VALUES[sliderTimeValue]);
     },
     [iteration, isPlay]
   );
@@ -39,7 +49,17 @@ export const Container = () => {
       if (newActiveElementsKeys[key]) delete newActiveElementsKeys[key];
       else newActiveElementsKeys[key] = true;
 
-      console.log(JSON.stringify(newActiveElementsKeys));
+      return newActiveElementsKeys;
+    });
+  };
+
+  const setStateElementKey = (key: string, value: boolean): void => {
+    setActiveElementsKeys((prevActiveElementsKeys: ActiveElementsKeysI) => {
+      const newActiveElementsKeys = { ...prevActiveElementsKeys };
+
+      if (value) newActiveElementsKeys[key] = true;
+      else delete newActiveElementsKeys[key];
+
       return newActiveElementsKeys;
     });
   };
@@ -52,10 +72,6 @@ export const Container = () => {
     setIsPlay(false);
   };
 
-  const toggleBorders = () => {
-    setIsBorders(prevIsBorders => !prevIsBorders);
-  };
-
   const clearBoard = () => {
     setActiveElementsKeys({});
   };
@@ -66,8 +82,8 @@ export const Container = () => {
     const minColumns = pattern.minColumns || INITIAL_COLUMNS_NUMBER;
     const minRows = pattern.minRows || INITIAL_ROWS_NUMBER;
 
-    setColumns(`${minColumns}`);
-    setRows(`${minRows}`);
+    setColumns(minColumns);
+    setRows(minRows);
     setActiveElementsKeys(pattern.structure);
   };
 
@@ -75,13 +91,14 @@ export const Container = () => {
     if (isPlay) return;
 
     setIsDragging(true);
+    setColorDrawing(!activeElementsKeys[elementKey]);
     toggleActiveElementKey(elementKey);
   };
 
   const onMouseEnterElement = (keyElement: string) => {
     if (!isDragging || isPlay) return;
 
-    toggleActiveElementKey(keyElement);
+    setStateElementKey(keyElement, isColorDrawing);
   };
 
   const onMouseUpBoard = () => {
@@ -134,6 +151,8 @@ export const Container = () => {
         setRows={setRows}
         selectPattern={selectPattern}
         isPlay={isPlay}
+        setSliderTimeValue={setSliderTimeValue}
+        sliderTimeValue={sliderTimeValue}
       />
       <Board
         tableColumns={columns}

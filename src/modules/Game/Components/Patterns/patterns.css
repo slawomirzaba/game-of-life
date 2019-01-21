@@ -16,7 +16,9 @@
     grid-auto-flow: column;
     padding: 0;
     width: 100%;
+    height: 100%;
     overflow: auto;
+    align-items: center;
 }
 
 .patterns__element {

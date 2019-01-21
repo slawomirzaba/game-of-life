@@ -8,8 +8,10 @@ interface PropsI {
   tableColumns: number;
   tableRows: number;
   isPlay: boolean;
+  sliderTimeValue: number;
   setColumns: (columns: string) => void;
   setRows: (rows: string) => void;
+  setSliderTimeValue: (position: number) => void;
   selectPattern: (pattern: PatternI) => void;
 }
 
@@ -17,9 +19,11 @@ export const Header = ({
   tableColumns,
   tableRows,
   isPlay,
+  sliderTimeValue,
   setColumns,
   setRows,
-  selectPattern
+  selectPattern,
+  setSliderTimeValue
 }: PropsI) => {
   return (
     <div className="header">
@@ -28,8 +32,10 @@ export const Header = ({
         tableRows={tableRows}
         setColumns={setColumns}
         setRows={setRows}
+        setSliderTimeValue={setSliderTimeValue}
+        sliderTimeValue={sliderTimeValue}
       />
-        <Patterns selectPattern={selectPattern} isPlay={isPlay} />
+      <Patterns selectPattern={selectPattern} isPlay={isPlay} />
     </div>
   );
 };

@@ -23,14 +23,17 @@ export const TableFooter = ({
   return (
     <tr>
       <td colSpan={tableColumns} className="board__tableFooter">
-        <button onClick={playAction} disabled={isPlayEnabled}>
-          <i className="fas fa-play" />
-        </button>
-        <button onClick={pauseAction} disabled={!isPlayEnabled}>
-          <i className="fas fa-pause" />
-        </button>
+        {isPlayEnabled ? (
+          <button onClick={pauseAction}>
+            <i className="fas fa-pause" />
+          </button>
+        ) : (
+          <button onClick={playAction}>
+            <i className="fas fa-play" />
+          </button>
+        )}
         <button onClick={executeOneIteration} disabled={isPlayEnabled}>
-          <i className="fas fa-redo" />
+          <i className="fas fa-arrow-right" />
         </button>
         <button onClick={clearBoard} disabled={isPlayEnabled}>
           <i className="fas fa-trash" />
