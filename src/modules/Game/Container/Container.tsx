@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { times as _times } from "lodash";
-import { ActiveElementsKeysI, PatternI } from "../interfaces";
+import { ActiveElementsKeysI, PatternI, SliderConfigI } from "../interfaces";
 import { Header } from "../Components/Header";
 import { Board } from "../Components/Board";
 import "./game.css";
@@ -8,19 +8,26 @@ import { getCellKey, getNewCellState } from "../lib";
 import { usePositiveInteger, useToggle } from "../hooks";
 
 export const Container = () => {
-  const DEFAULT_REFRESH_TIME = 200;
+  const DEFAULT_SLIDER_TIME_VALUE = 3;
   const INITIAL_ROWS_NUMBER = 20;
   const INITIAL_COLUMNS_NUMBER = 20;
   const INITIAL_ACTIVE_ELEMENTS_KEYS: ActiveElementsKeysI = {};
-  const SLIDER_VALUES = {
-    0: 3000,
-    1: 1000,
-    2: 500,
-    3: DEFAULT_REFRESH_TIME,
-    4: 50,
-    5: 20
+  const SLIDER_TIME_CONFIG: SliderConfigI = {
+    min: 0,
+    max: 5,
+    values: {
+      0: 3000,
+      1: 1000,
+      2: 500,
+      3: 200,
+      4: 50,
+      5: 20
+    }
   };
 
+  const [sliderTimeValue, setSliderTimeValue] = useState(
+    DEFAULT_SLIDER_TIME_VALUE
+  );
   const [columns, setColumns] = usePositiveInteger(INITIAL_ROWS_NUMBER);
   const [rows, setRows] = usePositiveInteger(INITIAL_COLUMNS_NUMBER);
   const [iteration, setIteration] = useState(0);
@@ -31,13 +38,12 @@ export const Container = () => {
   const [activeElementsKeys, setActiveElementsKeys] = useState(
     INITIAL_ACTIVE_ELEMENTS_KEYS
   );
-  const [sliderTimeValue, setSliderTimeValue] = useState(3);
 
   useEffect(
     () => {
       setTimeout(() => {
         isPlay && executeOneIteration();
-      }, SLIDER_VALUES[sliderTimeValue]);
+      }, SLIDER_TIME_CONFIG.values[sliderTimeValue]);
     },
     [iteration, isPlay]
   );
@@ -116,15 +122,10 @@ export const Container = () => {
       ...activeElementsKeys
     };
 
-    _times(rows).forEach(rowIndex => {
-      _times(columns).forEach(columnIndex => {
-        const key = getCellKey(rowIndex, columnIndex);
-        const newCellValue = getNewCellState(
-          key,
-          rows,
-          columns,
-          currentActiveElementsKeys
-        );
+    _times(rows + 10).forEach(rowIndex => {
+      _times(columns + 10).forEach(columnIndex => {
+        const key = getCellKey(rowIndex - 5, columnIndex - 5);
+        const newCellValue = getNewCellState(key, currentActiveElementsKeys);
 
         if (newCellValue === Boolean(activeElementsKeys[key])) return;
 
@@ -153,6 +154,7 @@ export const Container = () => {
         isPlay={isPlay}
         setSliderTimeValue={setSliderTimeValue}
         sliderTimeValue={sliderTimeValue}
+        sliderConfig={SLIDER_TIME_CONFIG}
       />
       <Board
         tableColumns={columns}

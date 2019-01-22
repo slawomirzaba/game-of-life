@@ -2,13 +2,14 @@ import React from "react";
 import "./header.css";
 import { BoardForm } from "../BoardForm";
 import { Patterns } from "../Patterns";
-import { PatternI } from "../../interfaces";
+import { PatternI, SliderConfigI } from "../../interfaces";
 
 interface PropsI {
   tableColumns: number;
   tableRows: number;
   isPlay: boolean;
   sliderTimeValue: number;
+  sliderConfig: SliderConfigI;
   setColumns: (columns: string) => void;
   setRows: (rows: string) => void;
   setSliderTimeValue: (position: number) => void;
@@ -20,6 +21,7 @@ export const Header = ({
   tableRows,
   isPlay,
   sliderTimeValue,
+  sliderConfig,
   setColumns,
   setRows,
   selectPattern,
@@ -34,6 +36,7 @@ export const Header = ({
         setRows={setRows}
         setSliderTimeValue={setSliderTimeValue}
         sliderTimeValue={sliderTimeValue}
+        sliderConfig={sliderConfig}
       />
       <Patterns selectPattern={selectPattern} isPlay={isPlay} />
     </div>

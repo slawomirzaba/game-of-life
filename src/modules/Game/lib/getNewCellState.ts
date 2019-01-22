@@ -3,17 +3,10 @@ import { countActiveNeighbors } from ".";
 
 export const getNewCellState = (
   cellKey: string,
-  rowsNumber: number,
-  columnsNumber: number,
   activeElementsKeys: ActiveElementsKeysI
 ): boolean => {
   const isActiveCell = activeElementsKeys[cellKey];
-  const neighborsCount = countActiveNeighbors(
-    cellKey,
-    rowsNumber,
-    columnsNumber,
-    activeElementsKeys
-  );
+  const neighborsCount = countActiveNeighbors(cellKey, activeElementsKeys);
 
   if (isActiveCell && neighborsCount < 2) return false;
   if (isActiveCell && neighborsCount > 3) return false;

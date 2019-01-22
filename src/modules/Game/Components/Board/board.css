@@ -9,6 +9,10 @@
   border-collapse: collapse;
 }
 
+.board__table--disabledBorders {
+  border: 2px solid black;
+}
+
 .board__table--disabledBorders tbody td {
   border: none;
 }

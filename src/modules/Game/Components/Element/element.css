@@ -4,6 +4,7 @@
   border: 1px solid #777;
   cursor: pointer;
   background: white;
+  user-select: none;
 }
 
 .boardElement--active {

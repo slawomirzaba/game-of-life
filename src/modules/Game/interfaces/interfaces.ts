@@ -9,3 +9,9 @@ export interface PatternI {
   minColumns?: number;
   minRows?: number;
 }
+
+export interface SliderConfigI {
+  min: number;
+  max: number;
+  values: { [key: number]: number };
+}

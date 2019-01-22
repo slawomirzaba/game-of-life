@@ -1,5 +1,6 @@
 import React from "react";
 import Slider from "rc-slider";
+import { SliderConfigI } from "../../interfaces";
 import "./boardForm.css";
 import "rc-slider/assets/index.css";
 
@@ -7,6 +8,7 @@ interface PropsI {
   tableColumns: number;
   tableRows: number;
   sliderTimeValue: number;
+  sliderConfig: SliderConfigI;
   setColumns: (value: string) => void;
   setRows: (value: string) => void;
   setSliderTimeValue: (position: number) => void;
@@ -16,6 +18,7 @@ export const BoardForm = ({
   tableColumns,
   tableRows,
   sliderTimeValue,
+  sliderConfig,
   setColumns,
   setRows,
   setSliderTimeValue
@@ -43,10 +46,9 @@ export const BoardForm = ({
       <div className="boardForm__field">
         <label className="boardForm__fieldLabel">Time interval</label>
         <Slider
-          min={0}
-          max={5}
+          min={sliderConfig.min}
+          max={sliderConfig.max}
           value={sliderTimeValue}
-          step={1}
           onChange={setSliderTimeValue}
         />
       </div>
