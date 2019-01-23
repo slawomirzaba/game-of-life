@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent, useRef } from "react";
 import "./tableFooter.css";
 
 interface PropsI {
@@ -9,6 +9,8 @@ interface PropsI {
   pauseAction: () => void;
   clearBoard: () => void;
   toggleBorders: () => void;
+  saveConfiguration: () => void;
+  handleUploadFile: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TableFooter = ({
@@ -18,8 +20,16 @@ export const TableFooter = ({
   executeOneIteration,
   pauseAction,
   clearBoard,
-  toggleBorders
+  toggleBorders,
+  saveConfiguration,
+  handleUploadFile
 }: PropsI) => {
+  const inputUploadRef = useRef(null);
+
+  const clearUploadFileValue = () => {
+    inputUploadRef.current.value = "";
+  };
+
   return (
     <tr>
       <td colSpan={tableColumns} className="board__tableFooter">
@@ -41,6 +51,26 @@ export const TableFooter = ({
         <button onClick={toggleBorders}>
           <i className="fas fa-th" />
         </button>
+        <button onClick={saveConfiguration} disabled={isPlayEnabled}>
+          <i className="fas fa-save" />
+        </button>
+        <label
+          htmlFor="pattern-upload"
+          className={`board__uploadFileLabel ${
+            isPlayEnabled ? "board__uploadFileLabel--disabled" : ""
+          }`}
+        >
+          <i className="fas fa-upload" />
+        </label>
+        <input
+          id="pattern-upload"
+          type="file"
+          ref={inputUploadRef}
+          className="board__uploadFileInput"
+          onChange={handleUploadFile}
+          disabled={isPlayEnabled}
+          onClick={clearUploadFileValue}
+        />
       </td>
     </tr>
   );

@@ -3,6 +3,8 @@ import { getCellKey } from "./getCellKey";
 
 export const countActiveNeighbors = (
   cellKey: string,
+  rowsNumber: number,
+  columnsNumber: number,
   activeElementsKeys: ActiveElementsKeysI
 ): number => {
   let neighbours = 0;
@@ -10,8 +12,13 @@ export const countActiveNeighbors = (
     .split(",")
     .map((element: string) => parseInt(element, 10));
 
-  for (let i = cellRowNumber - 1; i <= cellRowNumber + 1; ++i) {
-    for (let j = cellColumnNumber - 1; j <= cellColumnNumber + 1; ++j) {
+  const firstRowToCheck = Math.max(cellRowNumber - 1, 0);
+  const lastRowToCheck = Math.min(cellRowNumber + 1, rowsNumber);
+  const firstColumnToCheck = Math.max(cellColumnNumber - 1, 0);
+  const lastColumnToCheck = Math.min(cellColumnNumber + 1, columnsNumber);
+
+  for (let i = firstRowToCheck; i <= lastRowToCheck; ++i) {
+    for (let j = firstColumnToCheck; j <= lastColumnToCheck; ++j) {
       const key = getCellKey(i, j);
       if (key !== cellKey && activeElementsKeys[key]) neighbours++;
     }

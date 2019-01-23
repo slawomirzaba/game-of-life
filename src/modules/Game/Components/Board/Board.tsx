@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject, ChangeEvent } from "react";
 import { times as _times } from "lodash";
 import "./board.css";
 import { Element } from "../Element";
@@ -22,6 +22,8 @@ interface PropsI {
   onMouseUpBoard: () => void;
   onMouseLeaveBoard: () => void;
   toggleBorders: () => void;
+  saveConfiguration: () => void;
+  handleUploadFile: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Board = ({
@@ -38,7 +40,9 @@ export const Board = ({
   onMouseDownElement,
   onMouseUpBoard,
   onMouseLeaveBoard,
-  toggleBorders
+  toggleBorders,
+  saveConfiguration,
+  handleUploadFile
 }: PropsI) => {
   return (
     <div className="board">
@@ -75,6 +79,8 @@ export const Board = ({
             isPlayEnabled={isPlayEnabled}
             clearBoard={clearBoard}
             toggleBorders={toggleBorders}
+            saveConfiguration={saveConfiguration}
+            handleUploadFile={handleUploadFile}
           />
         </tfoot>
       </table>

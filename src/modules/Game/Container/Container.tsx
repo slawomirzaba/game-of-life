@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { times as _times } from "lodash";
 import { ActiveElementsKeysI, PatternI, SliderConfigI } from "../interfaces";
 import { Header } from "../Components/Header";
@@ -6,6 +6,7 @@ import { Board } from "../Components/Board";
 import "./game.css";
 import { getCellKey, getNewCellState } from "../lib";
 import { usePositiveInteger, useToggle } from "../hooks";
+import { downloadJson, uploadFile } from "../../Common/lib";
 
 export const Container = () => {
   const DEFAULT_SLIDER_TIME_VALUE = 3;
@@ -88,8 +89,8 @@ export const Container = () => {
     const minColumns = pattern.minColumns || INITIAL_COLUMNS_NUMBER;
     const minRows = pattern.minRows || INITIAL_ROWS_NUMBER;
 
-    setColumns(minColumns);
-    setRows(minRows);
+    if (minColumns > columns) setColumns(minColumns);
+    if (minRows > rows) setRows(minRows);
     setActiveElementsKeys(pattern.structure);
   };
 
@@ -122,10 +123,15 @@ export const Container = () => {
       ...activeElementsKeys
     };
 
-    _times(rows + 10).forEach(rowIndex => {
-      _times(columns + 10).forEach(columnIndex => {
-        const key = getCellKey(rowIndex - 5, columnIndex - 5);
-        const newCellValue = getNewCellState(key, currentActiveElementsKeys);
+    _times(rows).forEach(rowIndex => {
+      _times(columns).forEach(columnIndex => {
+        const key = getCellKey(rowIndex, columnIndex);
+        const newCellValue = getNewCellState(
+          key,
+          rows,
+          columns,
+          currentActiveElementsKeys
+        );
 
         if (newCellValue === Boolean(activeElementsKeys[key])) return;
 
@@ -141,6 +147,27 @@ export const Container = () => {
     } else {
       setIsPlay(false);
     }
+  };
+
+  const saveConfiguration = (): void => {
+    const data: Partial<PatternI> = {
+      structure: activeElementsKeys,
+      minColumns: columns,
+      minRows: rows
+    };
+    downloadJson(JSON.stringify(data), "myPattern.json");
+  };
+
+  const onSuccessFileUpload = (data: string): void => {
+    const pattern: Partial<PatternI> = JSON.parse(data);
+    setColumns(pattern.minColumns);
+    setRows(pattern.minRows);
+    setActiveElementsKeys(pattern.structure);
+  };
+
+  const handleUploadFile = (event: ChangeEvent<HTMLInputElement>): void => {
+    const file = event.target.files[0];
+    uploadFile(file, onSuccessFileUpload);
   };
 
   return (
@@ -172,6 +199,8 @@ export const Container = () => {
         onMouseUpBoard={onMouseUpBoard}
         onMouseLeaveBoard={onMouseLeaveBoard}
         toggleBorders={toggleBorders}
+        saveConfiguration={saveConfiguration}
+        handleUploadFile={handleUploadFile}
       />
     </div>
   );

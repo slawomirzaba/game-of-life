@@ -18,7 +18,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "strictNullChecks": false,
   },
   "include": [
     "src"

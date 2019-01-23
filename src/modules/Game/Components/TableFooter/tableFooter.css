@@ -6,7 +6,8 @@
     border: 1px solid #777;
 }
 
-.board__tableFooter>button {
+.board__tableFooter>button,
+.board__tableFooter>.board__uploadFileLabel {
     background: transparent;
     border: none;
     margin: 0;
@@ -18,11 +19,16 @@
     opacity: 0.7;
 }
 
-.board__tableFooter>button:not([disabled]):hover {
+.board__tableFooter>button:not([disabled]):hover,
+.board__tableFooter>.board__uploadFileLabel:not(.board__uploadFileLabel--disabled):hover {
     opacity: 1;
 }
 
-.board__tableFooter>button:disabled {
+.board__tableFooter>button:disabled,
+.board__tableFooter>.board__uploadFileLabel--disabled {
     cursor: not-allowed;
 }
 
+.board__uploadFileInput {
+    display: none;
+}
